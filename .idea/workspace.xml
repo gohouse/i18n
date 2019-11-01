@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09bf3a6d-169e-458a-89cf-b538f992ed10" name="Default Changelist" comment="" />
+    <list default="true" id="09bf3a6d-169e-458a-89cf-b538f992ed10" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/examples/language/zh-tw/error.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/demo.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/demo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/language/en-us/error.json" beforeDir="false" afterPath="$PROJECT_DIR$/examples/language/en-us/error.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/language/zh-cn/error.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/readAllFile.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/readAllFile.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/i18n.go" beforeDir="false" afterPath="$PROJECT_DIR$/i18n.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/i18n_default.go" beforeDir="false" afterPath="$PROJECT_DIR$/parser_json/parser_json.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/i18n_default_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/parser_json/parser_json_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/i18n_interface.go" beforeDir="false" afterPath="$PROJECT_DIR$/i18n_interface.go" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,23 +28,34 @@
     </option>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
   <component name="ProjectId" id="1Ss4sXYYG8P75QSgpUltWwNCDJz" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/examples/language/zh-cn" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/examples/language/zh-cn" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/examples/language/zh-tw" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/parser" />
       <recent name="$PROJECT_DIR$/examples/language" />
     </key>
   </component>
@@ -48,13 +71,22 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build github.com/gohouse/i18n/examples (1)">
+  <component name="RunManager" selected="Go Build.go build github.com/gohouse/i18n/examples">
     <configuration name="go build github.com/gohouse/i18n/examples (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="i18n" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/examples/readAllFile.go" />
       <package value="github.com/gohouse/i18n/examples" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/gohouse/i18n/examples (2)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="i18n" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/examples/test.go" />
+      <package value="github.com/gohouse/i18n/examples" />
+      <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
     <configuration name="go build github.com/gohouse/i18n/examples" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -65,15 +97,41 @@
       <package value="github.com/gohouse/i18n/examples" />
       <method v="2" />
     </configuration>
+    <configuration name="TestNewI18nDefault in github.com/gohouse/i18n/parser_json" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="i18n" />
+      <working_directory value="$PROJECT_DIR$/parser_json" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/gohouse/i18n/parser_json" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestNewI18nDefault$" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build github.com/gohouse/i18n/examples (1)" />
         <item itemvalue="Go Build.go build github.com/gohouse/i18n/examples" />
+        <item itemvalue="Go Test.TestNewI18nDefault in github.com/gohouse/i18n/parser_json" />
+        <item itemvalue="Go Build.go build github.com/gohouse/i18n/examples (1)" />
+        <item itemvalue="Go Build.go build github.com/gohouse/i18n/examples (2)" />
       </list>
     </recent_temporary>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

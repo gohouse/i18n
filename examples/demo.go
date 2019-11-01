@@ -1,19 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gohouse/i18n"
+	"github.com/gohouse/i18n/parser_json"
+	_ "github.com/gohouse/i18n/parser_json"
 )
 
 func main() {
-	var lang = i18n.NewI18n()
-	lang.Register("json",i18n.NewI18nDefault())
+	lang := i18n.NewI18n(
+		i18n.DefaultLang("zh-cn"),
+		//i18n.LangDirectory("./language"),
+		i18n.LangDirectory("/Users/fizz/go/src/github.com/gohouse/i18n/examples/language"),
+		i18n.DefaultParser("json"),
+	)
 
-	var cur = lang.Getter("json")
-	err := cur.SetFile("/Users/fizz/go/src/github.com/gohouse/i18n/examples/zh-cn/error.json")
-	if err!=nil {
-		panic(err.Error())
-	}
-	res := cur.Load("err_params_format")
-	fmt.Println(res)
+	i18n.NewParser().Register("json",parser_json.NewParserJson())
+
+	lang.Load("error.test")
 }

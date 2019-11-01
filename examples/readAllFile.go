@@ -30,7 +30,7 @@ func GetAllFile(dirname string, s []string) ([]string, error) {
 func main() {
 	//遍历打印所有的文件名
 	var s []string
-	s, _ = GetAllFile("/Users/fizz/go/src/github.com/gohouse/i18n/examples/language/", s)
+	s, _ = GetAllFile("/Users/fizz/go/src/github.com/gohouse/i18n/examples/language", s)
 
 	fmt.Printf("slice: %v", s)
 }
