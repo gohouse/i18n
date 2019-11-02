@@ -41,6 +41,7 @@ func (p *Parser) Load(key string, defaultVal ...string) interface{} {
 }
 
 func (p *Parser) Parse(opts *Options) e.E {
+	p.opts = opts
 	//fmt.Printf("%#v\n",p.parser)
 	var parser = p.Getter(p.opts.DefaultParser)
 	if parser==nil {
