@@ -10,8 +10,8 @@ func TestNewI18nDefault(t *testing.T) {
 	pj.SetOptions(&i18n.Options{
 		DefaultParser:  "json",
 		DefaultLang:    "zh-cn",
-		//LangDirectory:  "/Users/fizz/go/src/github.com/gohouse/i18n/examples/language",
-		LangDirectory:  "../examples/language",
+		LangDirectory:  "/Users/fizz/go/src/github.com/gohouse/i18n/examples/language",
+		//LangDirectory:  "../examples/language",
 		CacheDirectory: "",
 	})
 	err := pj.Parse()
@@ -23,16 +23,3 @@ func TestNewI18nDefault(t *testing.T) {
 	t.Log(res)
 	t.Log(res2)
 }
-//func TestNewI18nDefault2(t *testing.T) {
-//	var d = NewI18nDefault()
-//	d.SetRaw(`{
-//  "err_params_format": "参数格式有误",
-//  "err_params_missing": "参数缺失",
-//  "err2": {
-//    "aa": "aaxx",
-//    "bb": "bbxx"
-//  }
-//}`)
-//	res := d.Load("err2.aa")
-//	t.Log(res)
-//}

@@ -1,4 +1,11 @@
 {
+  "test": "just a test",
   "params_format_error": "Incorrect parameters format",
-  "params_missing": "Missing parameters"
+  "params_missing": "Missing parameters",
+  "err2": {
+    "aa": "aaxx",
+    "bb": {
+      "cc": "cc"
+    }
+  }
 }

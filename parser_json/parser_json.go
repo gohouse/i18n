@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// ParserJson json解析器对象
 type ParserJson struct {
 	opts *i18n.Options
 	// 示例: /zh-cn/error.json
@@ -27,17 +28,21 @@ type ParserJson struct {
 
 var _ i18n.IParser = &ParserJson{}
 
+// NewParserJson 初始化json解析器
 func NewParserJson() *ParserJson {
 	return &ParserJson{val: make(map[string]map[string]interface{})}
 }
 
+// SetOptions 注入配置
 func (pj *ParserJson) SetOptions(opts *i18n.Options) {
 	pj.opts = opts
 }
 
+// Parse 执行解析
 func (pj *ParserJson) Parse() e.E {
 	// 获取lang目录的所有文件并解析
 	var s []string
+	// 递归获取lang目录下的所有文件, 返回完整的文件路径数组
 	fileAll, err := GetAllFile(pj.opts.LangDirectory, s)
 	if err != nil {
 		return e.New(err.Error())
@@ -46,6 +51,7 @@ func (pj *ParserJson) Parse() e.E {
 	// 去掉目录前缀, 获取语言和文件
 	// 解析文件内容, 放入结果集中(pj.val)
 	for _, item := range fileAll {
+		// 获取除了目录外的文件名字
 		fileSuf := strings.Replace(item, pj.opts.LangDirectory, "", 1)
 		fileSuf = strings.TrimLeft(fileSuf, "/")
 		//fileAllReal = append(fileAllReal, fileSuf)
@@ -55,34 +61,39 @@ func (pj *ParserJson) Parse() e.E {
 		if len(split) != 2 {
 			return e.New("目录格式错误")
 		}
+		// 截取文件名作为一个key, 去掉后缀名
 		fileNameStr := strings.TrimRight(split[1], ".json")
 
-		// 解析内容
+		// 读取文件内容为 []byte
 		bytes, err := pj.ReadBytesFromFile(item)
 		if err != nil {
 			return e.New(err.Error())
 		}
 
+		// 解析json为map
 		var js map[string]interface{}
 		err = json.Unmarshal([]byte(string(bytes)), &js)
 		if err != nil {
 			return e.New(err.Error())
 		}
 
-		// 保存到pj.val内存中
+		// 保存到 ParserJson.val 内存中
 		langKey := StringToKey(split[0])
 		if _, ok := pj.val[langKey]; !ok {
 			pj.val[langKey] = make(map[string]interface{})
 		}
+		// 保存整个文件的内容为解析后的 interface{}
 		pj.val[langKey][fileNameStr] = js
 	}
 	return nil
 }
 
+// StringToKey 中横线转换为下划线
 func StringToKey(str string) string {
 	return strings.Replace(str, "-", "_", -1)
 }
 
+// ReadBytesFromFile 读取文件内容
 func (pj *ParserJson) ReadBytesFromFile(filePath string) ([]byte, error) {
 	f, err := os.Open(filePath)
 	if err != nil {
@@ -91,6 +102,7 @@ func (pj *ParserJson) ReadBytesFromFile(filePath string) ([]byte, error) {
 	return ioutil.ReadAll(f)
 }
 
+// Load 获取内容
 func (pj *ParserJson) Load(key string, defaultVal ...string) interface{} {
 	if key == "" {
 		return nil
@@ -120,6 +132,7 @@ func (pj *ParserJson) Load(key string, defaultVal ...string) interface{} {
 	return currentVal
 }
 
+// GetAllFile 递归读取制定目录下的所有文件, 返回完整文件路径数组
 func GetAllFile(dirname string, s []string) ([]string, error) {
 	rd, err := ioutil.ReadDir(dirname)
 	if err != nil {

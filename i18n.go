@@ -1,6 +1,7 @@
 package i18n
 
 import (
+	"github.com/gohouse/e"
 	"sync"
 )
 
@@ -34,7 +35,10 @@ func NewI18n(opt ...Option) *I18n {
 	i18nInit.initOption(opt...)
 
 	// 初始化解析器
-	i18nInit.initParser()
+	err := i18nInit.initParser()
+	if err!=nil {
+		panic(err.ErrorWithStack())
+	}
 
 	return i18nInit
 }
@@ -45,16 +49,42 @@ func (i *I18n) initOption(opt ...Option) {
 	}
 }
 
-func (i *I18n) initParser() {
-	i.parser = NewParser()
-	err := i.parser.Parse(i.opts)
-	if err!=nil {
-		panic(err.ErrorWithStack())
+func (i *I18n) initParser() e.E {
+	// 检查是否设置了解析器, 如果没有, 则默认使用json解析器
+	if i.opts.DefaultParser == "" {
+		i.initOption(DefaultParser("json"))
 	}
+	// 检查是否设置了语言, 如果没有, 则默认使用 zh-cn
+	if i.opts.DefaultLang == "" {
+		i.initOption(DefaultLang("zh-cn"))
+	}
+	// 加载解析器
+	i.parser = NewParser()
+
+	var parser = i.parser.Getter(i.opts.DefaultParser)
+	if parser==nil {
+		return e.New("未注册解析器")
+	}
+
+	// 传入配置
+	parser.SetOptions(i.opts)
+	// 解析内容
+	err := parser.Parse()
+	return err
 }
 
 func (i *I18n) Load(key string, defaultVal ...string) interface{} {
-	return i.parser.Load(key, defaultVal...)
+	var parser = i.parser.Getter(i.opts.DefaultParser)
+	if parser==nil {
+		panic(e.New("未注册的解析器").ErrorWithStack())
+	}
+
+	//// 传入配置
+	//parser.SetOptions(i.opts)
+	//// 解析内容
+	//err := parser.Parse()
+	//return err
+	return parser.Load(key, defaultVal...)
 }
 
 // LangDirectory 存放不同语言的目录
