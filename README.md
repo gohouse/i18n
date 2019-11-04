@@ -17,7 +17,7 @@ go get github.com/gohouse/i18n
 添加语言文件
 ```shell script
 # 创建文件夹
-mkdir -p ~/go/src/gopro/language/zh-cn ~/go/src/gopro/language/en-us
+mkdir -p /go/src/gopro/language/zh-cn /go/src/gopro/language/en-us
 
 # 编写中文语言文件
 cat >>~/go/src/gopro/language/zh-cn/error.json<<EOF
@@ -49,7 +49,7 @@ cat >>~/go/src/gopro/language/en-us/error.json<<EOF
 }
 EOF
 ```
-使用demo
+编写go代码文件`~/go/src/gopro/demo.go`
 ```go
 package main
 
@@ -63,7 +63,7 @@ import (
 func main() {
 	lang := i18n.NewI18n(
         // 这里指定语言文件路径
-		i18n.LangDirectory("/go/src/github.com/gohouse/i18n/examples/language"),
+		i18n.LangDirectory("/go/src/gopro/language"),
         // 这里如果不i设置, 则默认使用zh-cn
 		//i18n.DefaultLang("zh-cn"),
         // 这里如果不i设置, 则默认使用 json,可以自定义解析器和配置文件格式
