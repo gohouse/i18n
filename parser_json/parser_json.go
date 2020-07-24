@@ -13,7 +13,7 @@ import (
 // ParserJson json解析器对象
 type ParserJson struct {
 	opts *i18n.Options
-	// 示例: /zh-cn/error.json
+	// 示例: /zh_cn/error.json
 	// {
 	//  "params_format_error": "参数格式有误",
 	//  "params_missing": "参数缺失",
@@ -22,7 +22,7 @@ type ParserJson struct {
 	//    "bb": "bbxx"
 	//  }
 	//}
-	// map["zh-cn"]["error"]["params_format_error"]
+	// map["zh_cn"]["params_format_error"]
 	val map[string]map[string]interface{}
 }
 
@@ -39,7 +39,7 @@ func (pj *ParserJson) SetOptions(opts *i18n.Options) {
 }
 
 // Parse 执行解析
-func (pj *ParserJson) Parse() e.E {
+func (pj *ParserJson) Parse() e.Error {
 	// 获取lang目录的所有文件并解析
 	var s []string
 	// 递归获取lang目录下的所有文件, 返回完整的文件路径数组
@@ -82,8 +82,13 @@ func (pj *ParserJson) Parse() e.E {
 		if _, ok := pj.val[langKey]; !ok {
 			pj.val[langKey] = make(map[string]interface{})
 		}
+
 		// 保存整个文件的内容为解析后的 interface{}
-		pj.val[langKey][fileNameStr] = js
+		if pj.opts.EnableFileAsKey {
+			pj.val[langKey][fileNameStr] = js
+		} else {
+			pj.val[langKey] = js
+		}
 	}
 	return nil
 }
@@ -102,8 +107,8 @@ func (pj *ParserJson) ReadBytesFromFile(filePath string) ([]byte, error) {
 	return ioutil.ReadAll(f)
 }
 
-// Load 获取内容
-func (pj *ParserJson) Load(key string, defaultVal ...string) interface{} {
+// LoadWithDefault 获取内容
+func (pj *ParserJson) LoadWithDefault(key string, defaultVal ...string) interface{} {
 	if key == "" {
 		return nil
 	}
@@ -119,7 +124,11 @@ func (pj *ParserJson) Load(key string, defaultVal ...string) interface{} {
 	var currentVal interface{} = pj.val[StringToKey(pj.opts.DefaultLang)]
 	for _, item := range split {
 		if v, ok := currentVal.(map[string]interface{}); ok {
-			currentVal = v[item]
+			if v2,ok2 := v[item]; ok2 {
+				currentVal = v2
+			} else {
+				currentVal = nil
+			}
 		} else {
 			currentVal = nil
 		}
@@ -129,6 +138,36 @@ func (pj *ParserJson) Load(key string, defaultVal ...string) interface{} {
 	if currentVal == nil && len(defaultVal) > 0 {
 		return defaultVal[0]
 	}
+	return currentVal
+}
+
+// Load 获取单个或所有的配置对象
+func (pj *ParserJson) Load(keys ...string) interface{} {
+	if len(keys) == 0 {
+		return pj.val
+	}
+	var split = keys
+	if len(keys) == 1 {
+		// 如果key包含了点,则为多级调用
+		if strings.Contains(keys[0], ".") {
+			split = strings.Split(keys[0], ".")
+		}
+	}
+
+	// 取指定语言的配置
+	var currentVal interface{} = pj.val[StringToKey(pj.opts.DefaultLang)]
+	for _, item := range split {
+		if v, ok := currentVal.(map[string]interface{}); ok {
+			if v2,ok2 := v[item]; ok2 {
+				currentVal = v2
+			} else {
+				currentVal = nil
+			}
+		} else {
+			currentVal = nil
+		}
+	}
+
 	return currentVal
 }
 

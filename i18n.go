@@ -7,10 +7,11 @@ import (
 
 // Options 配置
 type Options struct {
-	DefaultParser  string
-	DefaultLang    string
-	LangDirectory  string
-	CacheDirectory string
+	DefaultParser   string
+	DefaultLang     string
+	LangDirectory   string
+	CacheDirectory  string
+	EnableFileAsKey bool
 }
 
 // Option 配置驱动
@@ -36,7 +37,7 @@ func NewI18n(opt ...Option) *I18n {
 
 	// 初始化解析器
 	err := i18nInit.initParser()
-	if err!=nil {
+	if err != nil {
 		panic(err.ErrorWithStack())
 	}
 
@@ -49,20 +50,20 @@ func (i *I18n) initOption(opt ...Option) {
 	}
 }
 
-func (i *I18n) initParser() e.E {
+func (i *I18n) initParser() e.Error {
 	// 检查是否设置了解析器, 如果没有, 则默认使用json解析器
 	if i.opts.DefaultParser == "" {
 		i.initOption(DefaultParser("json"))
 	}
-	// 检查是否设置了语言, 如果没有, 则默认使用 zh-cn
+	// 检查是否设置了语言, 如果没有, 则默认使用 zh_cn
 	if i.opts.DefaultLang == "" {
-		i.initOption(DefaultLang("zh-cn"))
+		i.initOption(DefaultLang("zh_cn"))
 	}
 	// 加载解析器
 	i.parser = NewParser()
 
 	var parser = i.parser.Getter(i.opts.DefaultParser)
-	if parser==nil {
+	if parser == nil {
 		return e.New("未注册解析器")
 	}
 
@@ -73,9 +74,9 @@ func (i *I18n) initParser() e.E {
 	return err
 }
 
-func (i *I18n) Load(key string, defaultVal ...string) interface{} {
+func (i *I18n) Load(keys ...string) interface{} {
 	var parser = i.parser.Getter(i.opts.DefaultParser)
-	if parser==nil {
+	if parser == nil {
 		panic(e.New("未注册的解析器").ErrorWithStack())
 	}
 
@@ -84,7 +85,21 @@ func (i *I18n) Load(key string, defaultVal ...string) interface{} {
 	//// 解析内容
 	//err := parser.Parse()
 	//return err
-	return parser.Load(key, defaultVal...)
+	return parser.Load(keys...)
+}
+
+func (i *I18n) LoadWithDefault(key string, defaultVal ...string) interface{} {
+	var parser = i.parser.Getter(i.opts.DefaultParser)
+	if parser == nil {
+		panic(e.New("未注册的解析器").ErrorWithStack())
+	}
+
+	//// 传入配置
+	//parser.SetOptions(i.opts)
+	//// 解析内容
+	//err := parser.Parse()
+	//return err
+	return parser.LoadWithDefault(key, defaultVal...)
 }
 
 // LangDirectory 存放不同语言的目录
@@ -112,5 +127,12 @@ func DefaultParser(p string) Option {
 func CacheDirectory(p string) Option {
 	return func(o *Options) {
 		o.DefaultParser = p
+	}
+}
+
+// EnableFileAsKey 将文件名作为其中的key
+func EnableFileAsKey(p bool) Option {
+	return func(o *Options) {
+		o.EnableFileAsKey = p
 	}
 }

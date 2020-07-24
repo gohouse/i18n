@@ -3,9 +3,9 @@
   "params_format_error": "参数格式有误",
   "params_missing": "参数缺失",
   "err2": {
-    "aa": "aaxx",
+    "aa": "嵌套aa测试",
     "bb": {
-      "cc": "cc"
+      "cc": "多层嵌套cc测试"
     }
   }
 }

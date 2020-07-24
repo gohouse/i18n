@@ -3,9 +3,9 @@
   "params_format_error": "Incorrect parameters format",
   "params_missing": "Missing parameters",
   "err2": {
-    "aa": "aaxx",
+    "aa": "nested aa test",
     "bb": {
-      "cc": "cc"
+      "cc": "multi nested cc test"
     }
   }
 }

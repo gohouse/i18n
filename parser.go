@@ -34,10 +34,10 @@ func (p *Parser) Getter(parser string) IParser {
 	return nil
 }
 
-//func (p *Parser) Load(key string, defaultVal ...string) interface{} {
+//func (p *Parser) LoadWithDefault(key string, defaultVal ...string) interface{} {
 //	var dp = p.Getter(p.opts.DefaultParser)
 //	dp.SetOptions(p.opts)
-//	return dp.Load(key, defaultVal...)
+//	return dp.LoadWithDefault(key, defaultVal...)
 //}
 //
 //func (p *Parser) Parse(opts *Options) e.E {
