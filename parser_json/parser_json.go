@@ -124,7 +124,7 @@ func (pj *ParserJson) LoadWithDefault(key string, defaultVal ...string) interfac
 	var currentVal interface{} = pj.val[StringToKey(pj.opts.DefaultLang)]
 	for _, item := range split {
 		if v, ok := currentVal.(map[string]interface{}); ok {
-			if v2,ok2 := v[item]; ok2 {
+			if v2, ok2 := v[item]; ok2 {
 				currentVal = v2
 			} else {
 				currentVal = nil
@@ -158,7 +158,7 @@ func (pj *ParserJson) Load(keys ...string) interface{} {
 	var currentVal interface{} = pj.val[StringToKey(pj.opts.DefaultLang)]
 	for _, item := range split {
 		if v, ok := currentVal.(map[string]interface{}); ok {
-			if v2,ok2 := v[item]; ok2 {
+			if v2, ok2 := v[item]; ok2 {
 				currentVal = v2
 			} else {
 				currentVal = nil

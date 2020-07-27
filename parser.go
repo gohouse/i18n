@@ -7,7 +7,7 @@ import (
 type Parser struct {
 	IParser
 	Parsers *sync.Map
-	opts   *Options
+	opts    *Options
 }
 
 var onceParser sync.Once
